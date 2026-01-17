@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SOLID Examples</title>
+    <link rel="stylesheet" href="/css/solid.css">
+</head>
+<body>
+<div class="app-shell">
+    <header class="app-header">
+        <div class="title-block">
+            <h1>SOLID Principle Examples</h1>
+            <span>Side‑by‑side good vs bad implementations in a Spring Boot app</span>
+        </div>
+        <div class="badge">Interactive Playground</div>
+    </header>
+
+    <section class="description-card">
+        <div class="description-main">
+            <p>Use the controls below to execute each SOLID example.</p>
+            <p>Each button calls a REST endpoint and shows a short explanation here, while some details are printed in the server console.</p>
+        </div>
+        <div class="legend">
+            <div class="legend-item">
+                <div class="dot bad"></div>
+                <span>Bad design (anti‑example)</span>
+            </div>
+            <div class="legend-item">
+                <div class="dot good"></div>
+                <span>Good design (SOLID‑aligned)</span>
+            </div>
+        </div>
+    </section>
+
+    <main class="solid-row">
+        <section class="solid-item">
+            <div class="solid-letter">S</div>
+            <div class="button-row">
+                <button class="bad" onclick="runExample('srp/bad')">
+                    SRP Bad
+                </button>
+                <button class="good" onclick="runExample('srp/good')">
+                    SRP Good
+                </button>
+            </div>
+        </section>
+
+        <section class="solid-item">
+            <div class="solid-letter">O</div>
+            <div class="button-row">
+                <button class="bad" onclick="runExample('ocp/bad')">
+                    OCP Bad
+                </button>
+                <button class="good" onclick="runExample('ocp/good')">
+                    OCP Good
+                </button>
+            </div>
+        </section>
+
+        <section class="solid-item">
+            <div class="solid-letter">L</div>
+            <div class="button-row">
+                <button class="bad" onclick="runExample('lsp/bad')">
+                    LSP Bad
+                </button>
+                <button class="good" onclick="runExample('lsp/good')">
+                    LSP Good
+                </button>
+            </div>
+        </section>
+
+        <section class="solid-item">
+            <div class="solid-letter">I</div>
+            <div class="button-row">
+                <button class="bad" onclick="runExample('isp/bad')">
+                    ISP Bad
+                </button>
+                <button class="good" onclick="runExample('isp/good')">
+                    ISP Good
+                </button>
+            </div>
+        </section>
+
+        <section class="solid-item">
+            <div class="solid-letter">D</div>
+            <div class="button-row">
+                <button class="bad" onclick="runExample('dip/bad')">
+                    DIP Bad
+                </button>
+                <button class="good" onclick="runExample('dip/good')">
+                    DIP Good
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <section>
+        <div id="output-label">
+            <div id="output-label-pill"></div>
+            <span>Last example output</span>
+        </div>
+        <div id="output">Result will appear here.</div>
+    </section>
+
+    <section class="solid-details">
+        <div>
+            <h2>About SOLID</h2>
+            <p>SOLID is a set of five design principles that make object‑oriented systems easier to understand, change, and test.</p>
+            <p>The buttons above execute bad and good implementations so you can see how these ideas affect real code.</p>
+        </div>
+        <div class="solid-list">
+            <div class="solid-item-detail">
+                <h3>S – Single Responsibility Principle</h3>
+                <span>One reason to change</span>
+                <p>Each class should have one clear responsibility. The bad SRP example mixes persistence, notifications, and auditing in one service, while the good example delegates each to its own collaborator.</p>
+            </div>
+            <div class="solid-item-detail">
+                <h3>O – Open/Closed Principle</h3>
+                <span>Open for extension, closed for modification</span>
+                <p>Behavior should be extended through new code, not by editing stable classes. The bad OCP example adds conditionals for each customer type; the good example introduces new discount policies without changing the calculator.</p>
+            </div>
+            <div class="solid-item-detail">
+                <h3>L – Liskov Substitution Principle</h3>
+                <span>Subtypes should be substitutable</span>
+                <p>Subclasses must honor the expectations of their base types. The bad LSP example throws at runtime when used as a Document; the good example separates readable and writable document capabilities so substitution is always safe.</p>
+            </div>
+            <div class="solid-item-detail">
+                <h3>I – Interface Segregation Principle</h3>
+                <span>Small, focused interfaces</span>
+                <p>Clients should not depend on methods they do not use. The bad ISP example forces robots to implement eat and sleep; the good example splits capabilities into Workable, Eatable, and Sleepable.</p>
+            </div>
+            <div class="solid-item-detail">
+                <h3>D – Dependency Inversion Principle</h3>
+                <span>Depend on abstractions</span>
+                <p>High‑level modules should not depend on concrete details. The bad DIP example creates a concrete SMTP sender directly; the good example depends on an EmailSender abstraction that can be swapped or mocked.</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    function runExample(path) {
+        const output = document.getElementById('output');
+        output.textContent = 'Running ' + path + '...';
+        fetch('/api/' + path)
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status);
+                }
+                return response.text();
+            })
+            .then(function (text) {
+                output.textContent = text;
+            })
+            .catch(function (error) {
+                output.textContent = 'Error: ' + error.message;
+            });
+    }
+</script>
+</body>
+</html>
