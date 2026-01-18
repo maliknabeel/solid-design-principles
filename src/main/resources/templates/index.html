@@ -18,7 +18,7 @@
     <section class="description-card">
         <div class="description-main">
             <p>Use the controls below to execute each SOLID example.</p>
-            <p>Each button calls a REST endpoint and shows a short explanation here, while some details are printed in the server console.</p>
+            <p>Each button calls a REST endpoint and shows a short explanation here that describes the principle, the bad design, and how the good design improves it.</p>
         </div>
         <div class="legend">
             <div class="legend-item">
@@ -112,27 +112,27 @@
             <div class="solid-item-detail">
                 <h3>S – Single Responsibility Principle</h3>
                 <span>One reason to change</span>
-                <p>Each class should have one clear responsibility. The bad SRP example mixes persistence, notifications, and auditing in one service, while the good example delegates each to its own collaborator.</p>
+                <p>Each class should have one clear responsibility. The bad SRP example has a single service that saves users, sends emails, and writes audit logs, so many reasons to change pile up in one place. The good example keeps UserService focused on the use case and delegates persistence, notifications, and auditing to separate collaborators, making changes and testing much easier.</p>
             </div>
             <div class="solid-item-detail">
                 <h3>O – Open/Closed Principle</h3>
                 <span>Open for extension, closed for modification</span>
-                <p>Behavior should be extended through new code, not by editing stable classes. The bad OCP example adds conditionals for each customer type; the good example introduces new discount policies without changing the calculator.</p>
+                <p>Behavior should be extended through new code, not by editing stable classes. The bad OCP example grows a conditional in DiscountCalculator for every CustomerType, so adding one more type means touching existing logic. The good example depends on a DiscountPolicy abstraction, so new customer types are added as new policy classes without modifying the price calculator.</p>
             </div>
             <div class="solid-item-detail">
                 <h3>L – Liskov Substitution Principle</h3>
                 <span>Subtypes should be substitutable</span>
-                <p>Subclasses must honor the expectations of their base types. The bad LSP example throws at runtime when used as a Document; the good example separates readable and writable document capabilities so substitution is always safe.</p>
+                <p>Subclasses must honor the expectations of their base types. In the bad LSP example, ReadOnlyDocument extends Document but fails when code calls setContent, so using it as a Document can cause runtime errors. The good example models read-only and writable concerns with ReadableDocument and WritableDocument, so each implementation truly supports the operations its type promises.</p>
             </div>
             <div class="solid-item-detail">
                 <h3>I – Interface Segregation Principle</h3>
                 <span>Small, focused interfaces</span>
-                <p>Clients should not depend on methods they do not use. The bad ISP example forces robots to implement eat and sleep; the good example splits capabilities into Workable, Eatable, and Sleepable.</p>
+                <p>Clients should not depend on methods they do not use. The bad ISP example defines a Worker interface with work, eat, and sleep, forcing RobotWorker to implement methods that do not make sense and may even throw at runtime. The good example splits capabilities into Workable, Eatable, and Sleepable so each client and implementation only depends on relevant operations.</p>
             </div>
             <div class="solid-item-detail">
                 <h3>D – Dependency Inversion Principle</h3>
                 <span>Depend on abstractions</span>
-                <p>High‑level modules should not depend on concrete details. The bad DIP example creates a concrete SMTP sender directly; the good example depends on an EmailSender abstraction that can be swapped or mocked.</p>
+                <p>High‑level modules should not depend on concrete details. The bad DIP example has PasswordResetService create a concrete SmtpEmailSender with new, tightly coupling the logic to one email mechanism. The good example makes PasswordResetService depend on the EmailSender abstraction instead, so different implementations can be injected or mocked without changing the high‑level code.</p>
             </div>
         </div>
     </section>
