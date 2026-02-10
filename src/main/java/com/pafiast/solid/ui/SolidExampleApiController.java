@@ -23,6 +23,19 @@ import com.pafiast.solid.srp.good.NotificationSender;
 import com.pafiast.solid.srp.good.UserRepository;
 import com.pafiast.solid.srp.good.UserService;
 
+/**
+ * REST controller that exposes endpoints demonstrating each SOLID principle.
+ * <p>
+ * This controller provides endpoints that run good and bad examples of:
+ * <ul>
+ *   <li>Single Responsibility Principle (SRP)</li>
+ *   <li>Open/Closed Principle (OCP)</li>
+ *   <li>Liskov Substitution Principle (LSP)</li>
+ *   <li>Interface Segregation Principle (ISP)</li>
+ *   <li>Dependency Inversion Principle (DIP)</li>
+ * </ul>
+ * Each endpoint returns a descriptive string explaining the principle and the example execution.
+ */
 @RestController
 @RequestMapping("/api")
 public class SolidExampleApiController {
