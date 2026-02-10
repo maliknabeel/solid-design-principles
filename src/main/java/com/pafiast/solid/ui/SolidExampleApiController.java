@@ -7,21 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pafiast.solid.dip.bad.PasswordResetService;
 import com.pafiast.solid.isp.bad.RobotWorker;
 import com.pafiast.solid.isp.bad.Worker;
-import com.pafiast.solid.isp.good.Workable;
 import com.pafiast.solid.lsp.bad.Document;
 import com.pafiast.solid.lsp.bad.ReadOnlyDocument;
 import com.pafiast.solid.ocp.bad.CustomerType;
 import com.pafiast.solid.ocp.bad.DiscountCalculator;
-import com.pafiast.solid.ocp.good.OrderPriceCalculator;
-import com.pafiast.solid.ocp.good.PremiumDiscountPolicy;
 import com.pafiast.solid.srp.bad.BadUserService;
-import com.pafiast.solid.srp.good.AuditLogger;
-import com.pafiast.solid.srp.good.ConsoleAuditLogger;
-import com.pafiast.solid.srp.good.ConsoleNotificationSender;
-import com.pafiast.solid.srp.good.InMemoryUserRepository;
-import com.pafiast.solid.srp.good.NotificationSender;
-import com.pafiast.solid.srp.good.UserRepository;
-import com.pafiast.solid.srp.good.UserService;
 
 /**
  * REST controller that exposes endpoints demonstrating each SOLID principle.
@@ -60,23 +50,11 @@ public class SolidExampleApiController {
 
     @GetMapping("/srp/good")
     public String runSrpGood() {
-        UserRepository userRepository = new InMemoryUserRepository();
-        NotificationSender notificationSender = new ConsoleNotificationSender();
-        AuditLogger auditLogger = new ConsoleAuditLogger();
-        UserService service = new UserService(userRepository, notificationSender, auditLogger);
-        service.createUser("Bob", "bob@example.com");
-        StringBuilder builder = new StringBuilder();
-        builder.append("Single Responsibility Principle (SRP) – Good example\n");
-        builder.append("Each class has one clear reason to change.\n\n");
-        builder.append("UserService now coordinates collaborators instead of doing the work:\n");
-        builder.append("- InMemoryUserRepository persists Bob <bob@example.com>\n");
-        builder.append("- ConsoleNotificationSender sends the welcome notification\n");
-        builder.append("- ConsoleAuditLogger records the audit entry\n\n");
-        builder.append("Benefits:\n");
-        builder.append("- Changing persistence, email, or logging touches only that specific class.\n");
-        builder.append("- UserService stays small and focused on the use case.\n");
-        builder.append("- Testing is easier because each responsibility can be mocked or swapped independently.");
-        return builder.toString();
+        return "TODO: Implement the Single Responsibility Principle (SRP) good example.\n" +
+               "1. Create a User class responsible only for data.\n" +
+               "2. Create separate interfaces/classes for UserRepository, NotificationSender, and AuditLogger.\n" +
+               "3. Create a UserService that coordinates these collaborators.\n" +
+               "4. Verify your solution here.";
     }
 
     @GetMapping("/ocp/bad")
@@ -100,23 +78,11 @@ public class SolidExampleApiController {
 
     @GetMapping("/ocp/good")
     public String runOcpGood() {
-        OrderPriceCalculator calculator = new OrderPriceCalculator(new PremiumDiscountPolicy());
-        double finalPrice = calculator.calculatePrice(100.0);
-        double originalPrice = 100.0;
-        double discount = originalPrice - finalPrice;
-        StringBuilder builder = new StringBuilder();
-        builder.append("Open/Closed Principle (OCP) – Good example\n");
-        builder.append("OrderPriceCalculator depends on the DiscountPolicy abstraction instead of conditionals.\n\n");
-        builder.append("Scenario:\n");
-        builder.append("- Input price: ").append(originalPrice).append("\n");
-        builder.append("- Policy in use: PremiumDiscountPolicy\n");
-        builder.append("- Discount: ").append(discount).append("\n");
-        builder.append("- Final price: ").append(finalPrice).append("\n\n");
-        builder.append("Benefits:\n");
-        builder.append("- To support a new customer type, create a new DiscountPolicy implementation.\n");
-        builder.append("- OrderPriceCalculator stays closed for modification but open to new policies.\n");
-        builder.append("- Behavior is easier to extend and reason about.");
-        return builder.toString();
+        return "TODO: Implement the Open/Closed Principle (OCP) good example.\n" +
+               "1. Create a DiscountPolicy interface.\n" +
+               "2. Implement different policies (Standard, Premium, VIP).\n" +
+               "3. Refactor OrderPriceCalculator to depend on the interface.\n" +
+               "4. Verify your solution here.";
     }
 
     @GetMapping("/lsp/bad")
@@ -147,20 +113,11 @@ public class SolidExampleApiController {
 
     @GetMapping("/lsp/good")
     public String runLspGood() {
-        com.pafiast.solid.lsp.good.ReadableDocument readableDocument =
-                new com.pafiast.solid.lsp.good.ReadOnlyTextDocument("Initial content");
-        String content = readableDocument.getContent();
-        StringBuilder builder = new StringBuilder();
-        builder.append("Liskov Substitution Principle (LSP) – Good example\n");
-        builder.append("Read-only and writable responsibilities are modeled with separate abstractions.\n\n");
-        builder.append("Operation:\n");
-        builder.append("- ReadableDocument document = new ReadOnlyTextDocument(\"Initial content\")\n");
-        builder.append("- document.getContent() -> ").append(content).append("\n\n");
-        builder.append("Benefits:\n");
-        builder.append("- Code that only needs to read depends on ReadableDocument.\n");
-        builder.append("- WritableDocument extends ReadableDocument for clients that need writes.\n");
-        builder.append("- All implementations respect the expectations of the type they implement, so substitutability holds.");
-        return builder.toString();
+        return "TODO: Implement the Liskov Substitution Principle (LSP) good example.\n" +
+               "1. Separate read-only and writable responsibilities (e.g., ReadableDocument interface).\n" +
+               "2. Ensure ReadOnlyTextDocument implements only the reading interface.\n" +
+               "3. Ensure WritableDocument extends the reading interface and adds writing capabilities.\n" +
+               "4. Verify your solution here.";
     }
 
     @GetMapping("/isp/bad")
@@ -193,19 +150,11 @@ public class SolidExampleApiController {
 
     @GetMapping("/isp/good")
     public String runIspGood() {
-        Workable worker = new com.pafiast.solid.isp.good.RobotWorker();
-        worker.work();
-        StringBuilder builder = new StringBuilder();
-        builder.append("Interface Segregation Principle (ISP) – Good example\n");
-        builder.append("Capabilities are split into small, focused interfaces.\n\n");
-        builder.append("RobotWorker only implements Workable:\n");
-        builder.append("- Workable worker = new RobotWorker()\n");
-        builder.append("- worker.work() succeeds\n\n");
-        builder.append("Benefits:\n");
-        builder.append("- Clients that only need work depend on Workable.\n");
-        builder.append("- HumanWorker can implement Eatable and Sleepable separately.\n");
-        builder.append("- Implementations expose only the operations they truly support.");
-        return builder.toString();
+        return "TODO: Implement the Interface Segregation Principle (ISP) good example.\n" +
+               "1. Break the large Worker interface into smaller interfaces (Workable, Eatable, Sleepable).\n" +
+               "2. Have RobotWorker implement only Workable.\n" +
+               "3. Have HumanWorker implement all relevant interfaces.\n" +
+               "4. Verify your solution here.";
     }
 
     @GetMapping("/dip/bad")
@@ -226,20 +175,10 @@ public class SolidExampleApiController {
 
     @GetMapping("/dip/good")
     public String runDipGood() {
-        com.pafiast.solid.dip.good.PasswordResetService service =
-                new com.pafiast.solid.dip.good.PasswordResetService(new com.pafiast.solid.dip.good.SmtpEmailSender());
-        service.resetPassword("user@example.com");
-        StringBuilder builder = new StringBuilder();
-        builder.append("Dependency Inversion Principle (DIP) – Good example\n");
-        builder.append("PasswordResetService depends on the EmailSender abstraction instead of a concrete class.\n\n");
-        builder.append("Operation:\n");
-        builder.append("- EmailSender sender = new SmtpEmailSender()\n");
-        builder.append("- PasswordResetService service = new PasswordResetService(sender)\n");
-        builder.append("- service.resetPassword(\"user@example.com\")\n\n");
-        builder.append("Benefits:\n");
-        builder.append("- The high-level service only knows the EmailSender abstraction.\n");
-        builder.append("- Different implementations (SMTP, mock, API-based) can be injected without changing the service.\n");
-        builder.append("- The code is easier to test and adapt to new infrastructure.");
-        return builder.toString();
+        return "TODO: Implement the Dependency Inversion Principle (DIP) good example.\n" +
+               "1. Create an EmailSender interface.\n" +
+               "2. Implement SmtpEmailSender implementing that interface.\n" +
+               "3. Refactor PasswordResetService to depend on EmailSender (constructor injection).\n" +
+               "4. Verify your solution here.";
     }
 }
