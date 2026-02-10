@@ -27,7 +27,7 @@
             </div>
             <div class="legend-item">
                 <div class="dot good"></div>
-                <span>Good design (SOLID‑aligned)</span>
+                <span>Good design (Your Task)</span>
             </div>
         </div>
     </section>
@@ -112,27 +112,27 @@
             <div class="solid-item-detail">
                 <h3>S – Single Responsibility Principle</h3>
                 <span>One reason to change</span>
-                <p>Each class should have one clear responsibility. The bad SRP example has a single service that saves users, sends emails, and writes audit logs, so many reasons to change pile up in one place. The good example keeps UserService focused on the use case and delegates persistence, notifications, and auditing to separate collaborators, making changes and testing much easier.</p>
+                <p>Each class should have one clear responsibility. The bad SRP example has a single service that saves users, sends emails, and writes audit logs, so many reasons to change pile up in one place. Your task is to implement the good example: keep UserService focused on the use case and delegate persistence, notifications, and auditing to separate collaborators, making changes and testing much easier.</p>
             </div>
             <div class="solid-item-detail">
                 <h3>O – Open/Closed Principle</h3>
                 <span>Open for extension, closed for modification</span>
-                <p>Behavior should be extended through new code, not by editing stable classes. The bad OCP example grows a conditional in DiscountCalculator for every CustomerType, so adding one more type means touching existing logic. The good example depends on a DiscountPolicy abstraction, so new customer types are added as new policy classes without modifying the price calculator.</p>
+                <p>Behavior should be extended through new code, not by editing stable classes. The bad OCP example grows a conditional in DiscountCalculator for every CustomerType, so adding one more type means touching existing logic. Your task is to implement the good example: depend on a DiscountPolicy abstraction, so new customer types are added as new policy classes without modifying the price calculator.</p>
             </div>
             <div class="solid-item-detail">
                 <h3>L – Liskov Substitution Principle</h3>
                 <span>Subtypes should be substitutable</span>
-                <p>Subclasses must honor the expectations of their base types. In the bad LSP example, ReadOnlyDocument extends Document but fails when code calls setContent, so using it as a Document can cause runtime errors. The good example models read-only and writable concerns with ReadableDocument and WritableDocument, so each implementation truly supports the operations its type promises.</p>
+                <p>Subclasses must honor the expectations of their base types. In the bad LSP example, ReadOnlyDocument extends Document but fails when code calls setContent, so using it as a Document can cause runtime errors. Your task is to implement the good example: model read-only and writable concerns with segregated interfaces (e.g., ReadableDocument), so each implementation truly supports the operations its type promises.</p>
             </div>
             <div class="solid-item-detail">
                 <h3>I – Interface Segregation Principle</h3>
                 <span>Small, focused interfaces</span>
-                <p>Clients should not depend on methods they do not use. The bad ISP example defines a Worker interface with work, eat, and sleep, forcing RobotWorker to implement methods that do not make sense and may even throw at runtime. The good example splits capabilities into Workable, Eatable, and Sleepable so each client and implementation only depends on relevant operations.</p>
+                <p>Clients should not depend on methods they do not use. The bad ISP example defines a Worker interface with work, eat, and sleep, forcing RobotWorker to implement methods that do not make sense and may even throw at runtime. Your task is to implement the good example: split capabilities into smaller interfaces (e.g., Workable, Eatable) so each client and implementation only depends on relevant operations.</p>
             </div>
             <div class="solid-item-detail">
                 <h3>D – Dependency Inversion Principle</h3>
                 <span>Depend on abstractions</span>
-                <p>High‑level modules should not depend on concrete details. The bad DIP example has PasswordResetService create a concrete SmtpEmailSender with new, tightly coupling the logic to one email mechanism. The good example makes PasswordResetService depend on the EmailSender abstraction instead, so different implementations can be injected or mocked without changing the high‑level code.</p>
+                <p>High‑level modules should not depend on concrete details. The bad DIP example has PasswordResetService create a concrete SmtpEmailSender with new, tightly coupling the logic to one email mechanism. Your task is to implement the good example: make PasswordResetService depend on an EmailSender abstraction instead, so different implementations can be injected or mocked without changing the high‑level code.</p>
             </div>
         </div>
     </section>
