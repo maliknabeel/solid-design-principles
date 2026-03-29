@@ -1,12 +1,23 @@
-package com.pafiast.solid.dip.bad;
+package com.pafiast.solid.dip.good;
 
 /**
- * Bad example of Dependency Inversion Principle (DIP).
+ * Good example of Dependency Inversion Principle (DIP).
  * <p>
- * This class violates DIP because it directly instantiates the concrete class {@link SmtpEmailSender}.
- * This tight coupling makes it difficult to switch to a different email provider or mock the email sender for testing.
+ * This class follows DIP because it depends on abstraction (EmailSender interface)
+ * rather than concrete implementation. The email sender is injected through constructor.
  */
 public class PasswordResetService {
+
+    private final EmailSender emailSender;
+
+    /**
+     * Constructor with dependency injection.
+     *
+     * @param emailSender the email sender implementation
+     */
+    public PasswordResetService(EmailSender emailSender) {
+        this.emailSender = emailSender;
+    }
 
     /**
      * Resets the password for a user.
@@ -14,8 +25,6 @@ public class PasswordResetService {
      * @param email the user's email
      */
     public void resetPassword(String email) {
-        SmtpEmailSender smtpEmailSender = new SmtpEmailSender();
-        smtpEmailSender.sendEmail(email, "Password reset", "Reset link");
+        emailSender.sendEmail(email, "Password reset", "Reset link");
     }
 }
-
